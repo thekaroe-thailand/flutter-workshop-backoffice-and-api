@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 module.exports = {
     signIn: async (req, res) => {
@@ -18,8 +20,14 @@ module.exports = {
                 }
             });
 
-            if (row != undefined) return res.send('login success');
-            return res.status(401).send('unauthorized');
+            if (row != undefined) {
+                const key = process.env.SECRET_KEY;
+                const token = jwt.sign(row, key, { expiresIn: '1d' });
+
+                return res.send({ token: token });
+            } else {
+                return res.status(401).send('unauthorized');
+            }
         } catch (e) {
             return res.status(500).send({ error: e.message });
         }
