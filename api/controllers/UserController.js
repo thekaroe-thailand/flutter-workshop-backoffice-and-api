@@ -31,5 +31,16 @@ module.exports = {
         } catch (e) {
             return res.status(500).send({ error: e.message });
         }
+    },
+    info: async (req, res) => {
+        try {
+            const token = req.headers.authorization.replace('Bearer ', '');
+            const key = process.env.SECRET_KEY;
+            const payload = jwt.verify(token, key);
+
+            res.send(payload);
+        } catch (e) {
+            res.status(500).send({ error: e.message });
+        }
     }
 }

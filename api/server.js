@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
     res.send('API Working.');
 });
 app.post('/api/user/signIn', (req, res) => UserController.signIn(req, res));
+app.get('/api/user/info', (req, res) => UserController.info(req, res));
 
 app.listen(3000, (err) => {
     if (err) console.log(err);
