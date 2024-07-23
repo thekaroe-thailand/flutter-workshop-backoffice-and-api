@@ -3,8 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const UserController = require("./controllers/UserController");
 const RoomController = require("./controllers/RoomController");
+const RoomImageController = require("./controllers/RoomImageController");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -12,6 +15,9 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("API Working.");
 });
+app.post("/api/roomImage/create/:roomId", (req, res) =>
+  RoomImageController.create(req, res)
+);
 app.post("/api/user/signIn", (req, res) => UserController.signIn(req, res));
 app.get("/api/user/info", (req, res) => UserController.info(req, res));
 app.post("/api/room/create", (req, res) => RoomController.create(req, res));

@@ -27,6 +27,12 @@ model Room {
   name String
   price Int
   status String @default("use") // use, delete
+  RoomImages RoomImage[]
 }
 
-
+model RoomImage {
+  id Int @id() @default(autoincrement())
+  name String
+  roomId Int
+  Room Room @relation(fields: [roomId], references: [id])
+}
