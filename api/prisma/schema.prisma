@@ -28,6 +28,7 @@ model Room {
   price Int
   status String @default("use") // use, delete
   RoomImages RoomImage[]
+  RoomRentDetails RoomRentDetail[]
 }
 
 model RoomImage {
@@ -35,4 +36,25 @@ model RoomImage {
   name String
   roomId Int
   Room Room @relation(fields: [roomId], references: [id])
+}
+
+model RoomRent {
+  id Int @id() @default(autoincrement())
+  customerName String 
+  customerPhone String
+  rentDate DateTime
+  checkinDate DateTime?
+  checkoutDate DateTime?
+  fine Int? 
+  remark String?
+  RoomRentDetails RoomRentDetail[]
+  payDate DateTime? // วันที่ชำระเงิน
+}
+
+model RoomRentDetail {
+  id Int @id() @default(autoincrement())
+  roomId Int
+  roomRentId Int
+  Room Room @relation(fields: [roomId], references: [id])
+  RoomRent RoomRent @relation(fields: [roomRentId], references: [id])
 }
