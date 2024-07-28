@@ -17,6 +17,10 @@ app.use("/uploads", express.static("uploads"));
 app.get("/", (req, res) => {
   res.send("API Working.");
 });
+app.post("/api/roomRent/isRent", (req, res) =>
+  RoomRentController.isRent(req, res)
+);
+app.post("/api/roomRent/rent", (req, res) => RoomRentController.rent(req, res));
 app.get("/api/roomRent/list", (req, res) => RoomRentController.list(req, res));
 app.post("/api/roomImage/create/:roomId", (req, res) =>
   RoomImageController.create(req, res)
